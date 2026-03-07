@@ -1,0 +1,1 @@
+    score_display = global.session_score;
