@@ -1,12 +1,11 @@
 panel_x  = 8;
-panel_y  = 88;       // ใต้ HUD (hud_h=80 + margin 8)
+panel_y  = 88;
 panel_w  = 430;
 
 btn_size = 88;
 btn_pad  = 8;
 btn_cols = 4;
 
-// สร้าง button list จาก level ปัจจุบัน
 buttons = [];
 var _avail = global.level_data[global.session_level_id].ingredients;
 for (var i = 0; i < array_length(_avail); i++) {
@@ -20,12 +19,11 @@ for (var i = 0; i < array_length(_avail); i++) {
         spr    : _ing.spr,
         col    : _ing.col,
         bx     : panel_x + 8 + _c * (btn_size + btn_pad),
-        by     : panel_y + 8 + _r * (btn_size + btn_pad),
+        by     : panel_y + 28 + _r * (btn_size + btn_pad),  // +28 เว้นที่ label
         hover  : false,
         scale  : 1.0,
     });
 }
 
-// คำนวณความสูง panel จากจำนวน row
 var _rows = ceil(array_length(_avail) / btn_cols);
-panel_h  = 8 + _rows * (btn_size + btn_pad) + 8;
+panel_h   = 28 + _rows * (btn_size + btn_pad) + 8;  // 28 = ที่ label

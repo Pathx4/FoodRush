@@ -52,6 +52,8 @@ pause_hover = point_in_rectangle(_mx, _my, _W - 110, 14, _W - 10, hud_h - 14);
 
 if (mouse_check_button_pressed(mb_left) && pause_hover) {
     if (global.game_state == GAME_STATE.PLAYING) {
-        instance_create_layer(0, 0, "UI", obj_ui_pause);
+        var _inst = instance_create_layer(0, 0, "UI", obj_ui_pause);
+        show_debug_message("pause inst = " + string(_inst));
+        show_debug_message("inst exists = " + string(instance_exists(_inst)));
     }
 }

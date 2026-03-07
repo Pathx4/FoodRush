@@ -49,6 +49,7 @@
     {"id":{"name":"obj_title_screen","path":"objects/obj_title_screen/obj_title_screen.yy",},},
     {"id":{"name":"obj_ui_hud","path":"objects/obj_ui_hud/obj_ui_hud.yy",},},
     {"id":{"name":"obj_ui_ingredients","path":"objects/obj_ui_ingredients/obj_ui_ingredients.yy",},},
+    {"id":{"name":"obj_ui_kitchen","path":"objects/obj_ui_kitchen/obj_ui_kitchen.yy",},},
     {"id":{"name":"obj_ui_orders","path":"objects/obj_ui_orders/obj_ui_orders.yy",},},
     {"id":{"name":"obj_ui_pause","path":"objects/obj_ui_pause/obj_ui_pause.yy",},},
     {"id":{"name":"obj_ui_result","path":"objects/obj_ui_result/obj_ui_result.yy",},},

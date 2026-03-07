@@ -12,7 +12,6 @@ for (var i = 0; i < array_length(buttons); i++) {
     _b.scale = lerp(_b.scale, _in ? 1.07 : 1.0, 0.2);
 }
 
-// คลิก
 if (mouse_check_button_pressed(mb_left)) {
     for (var i = 0; i < array_length(buttons); i++) {
         var _b = buttons[i];

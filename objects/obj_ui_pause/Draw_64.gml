@@ -1,3 +1,5 @@
+// บรรทัดแรกสุดของ Draw GUI
+show_debug_message("pause drawing");
 var _W  = display_get_gui_width();
 var _H  = display_get_gui_height();
 var _cx = _W * 0.5;
