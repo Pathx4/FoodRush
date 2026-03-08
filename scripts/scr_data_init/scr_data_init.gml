@@ -60,7 +60,7 @@ function scr_data_init() {
     // ── Lv0: Street Stall — ร้านแผงลอย เบอร์เกอร์ + ข้าว ──
     global.level_data[LEVEL.STREET_STALL] = {
         name           : "Street Stall",
-        icon           : spr_level_stall,
+        icon_spr   : asset_get_index("spr_level_stall"), 
         duration       : 120,
         max_orders     : 4,
         order_interval : 12,
@@ -76,7 +76,7 @@ function scr_data_init() {
     // ── Lv1: Food Truck — เมนูทั่วไป เบอร์เกอร์ + ปลา ──
     global.level_data[LEVEL.FOOD_TRUCK] = {
         name           : "Food Truck",
-        icon           : spr_level_truck,
+        icon_spr   : asset_get_index("spr_level_truck"),
         duration       : 100,
         max_orders     : 5,
         order_interval : 10,
@@ -94,7 +94,7 @@ function scr_data_init() {
     // ── Lv2: Noodle House — ร้านก๋วยเตี๋ยว บะหมี่ ข้าว ──
     global.level_data[LEVEL.NOODLE_HOUSE] = {
         name           : "Noodle House",
-        icon           : spr_level_noodle,
+        icon_spr   : asset_get_index("spr_level_noodle"),
         duration       : 110,
         max_orders     : 6,
         order_interval : 9,
@@ -111,7 +111,7 @@ function scr_data_init() {
     // ── Lv3: Sushi Bar — ร้านซูชิ ปลา ข้าว ──
     global.level_data[LEVEL.SUSHI_BAR] = {
         name           : "Sushi Bar",
-        icon           : spr_level_sushi,
+        icon_spr   : asset_get_index("spr_level_sushi"),
         duration       : 100,
         max_orders     : 6,
         order_interval : 8,
@@ -128,7 +128,7 @@ function scr_data_init() {
     // ── Lv4: Pizza Palace — ร้านพิซซ่า แป้ง ชีส ผัก ──
     global.level_data[LEVEL.PIZZA_PALACE] = {
         name           : "Pizza Palace",
-        icon           : spr_level_pizza,
+        icon_spr   : asset_get_index("spr_level_pizza"),
         duration       : 120,
         max_orders     : 7,
         order_interval : 7,
@@ -144,7 +144,7 @@ function scr_data_init() {
     // ── Lv5: Grand Restaurant — ร้านใหญ่ ทุกเมนู ──
     global.level_data[LEVEL.GRAND_RESTAURANT] = {
         name           : "Grand Restaurant",
-        icon           : spr_level_grand,
+        icon_spr   : asset_get_index("spr_level_grand"),
         duration       : 130,
         max_orders     : 8,
         order_interval : 6,

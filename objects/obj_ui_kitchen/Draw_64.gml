@@ -146,7 +146,7 @@ if (_focus_idx >= 0) {
     draw_set_font(fnt_small);
     draw_set_color(COL_YELLOW);
     draw_set_halign(fa_center);
-    draw_text((_fc_x2 - 56 + _fc_x2 - 8) * 0.5, _fc_y1 + 15, "$" + string(_fo.tip));
+    draw_text((_fc_x2 - 56 + _fc_x2 - 8) * 0.5, _fc_y1 + 10, "$" + string(_fo.tip));
 
     // Timer bar
     draw_progress_bar(_fc_x1 + 12, _fc_y2 - 16,

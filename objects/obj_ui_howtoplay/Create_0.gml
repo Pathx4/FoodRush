@@ -1,13 +1,10 @@
-depth     = -500;
-bg_alpha  = 0;
-close_hover = false;
-
-// Scroll
-scroll_y     = 0;
+depth         = -500;
+bg_alpha      = 0;
+close_hover   = false;
+scroll_y      = 0;
 scroll_target = 0;
-content_h    = 620;   // ความสูงเนื้อหาทั้งหมด
+content_h     = 620;
 
-// Panel
 var _W = display_get_gui_width();
 var _H = display_get_gui_height();
 panel_w = min(520, _W - 80);

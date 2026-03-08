@@ -32,40 +32,37 @@ draw_text(63, 32, "< Back");
 draw_set_font(fnt_title);
 draw_set_color(COL_ORANGE);
 draw_set_halign(fa_center);
+draw_set_valign(fa_top);
 draw_text(_cx, 14, "Select Level");
 
 // Total stars
 var _total_stars = 0;
-var _max_stars   = LEVEL.COUNT * 3;
-for (var i = 0; i < LEVEL.COUNT; i++) {
-    _total_stars += scr_get_stars(i, global.best_scores[i]);
-}
+for (var i = 0; i < LEVEL.COUNT; i++) _total_stars += scr_get_stars(i, global.best_scores[i]);
 draw_set_font(fnt_small);
 draw_set_color(COL_YELLOW);
 draw_set_halign(fa_right);
-draw_text(_W - 20, 22, string(_total_stars) + " / " + string(_max_stars) + " stars");
+draw_text(_W - 20, 22, string(_total_stars) + " / " + string(LEVEL.COUNT * 3) + " stars");
 
-// ── Level cards ───────────────────────────────────────
+// ── Cards ─────────────────────────────────────────────
 var _cols    = 3;
 var _card_w  = 200;
-var _card_h  = 180;
+var _card_h  = 200;
 var _gap_x   = 28;
-var _gap_y   = 28;
+var _gap_y   = 24;
 var _grid_w  = _cols * _card_w + (_cols - 1) * _gap_x;
 var _start_x = _W * 0.5 - _grid_w * 0.5;
-var _start_y = 110;
+var _start_y = 90;
 
 for (var i = 0; i < LEVEL.COUNT; i++) {
-    var _lv      = global.level_data[i];
-    var _col     = i mod _cols;
-    var _row     = floor(i / _cols);
-    var _sc      = card_scales[i];
-    var _cy_base = _start_y + _row * (_card_h + _gap_y) + card_y_off[i];
-    var _ccx     = _start_x + _col * (_card_w + _gap_x) + _card_w * 0.5;
-    var _ccy     = _cy_base + _card_h * 0.5;
+    var _lv   = global.level_data[i];
+    var _col  = i mod _cols;
+    var _row  = floor(i / _cols);
+    var _sc   = card_scales[i];
+    var _ccx  = _start_x + _col * (_card_w + _gap_x) + _card_w * 0.5;
+    var _ccy  = _start_y + _row * (_card_h + _gap_y) + _card_h * 0.5 + card_y_off[i];
 
-    var _hw = _card_w * _sc * 0.5;
-    var _hh = _card_h * _sc * 0.5;
+    var _hw  = _card_w * _sc * 0.5;
+    var _hh  = _card_h * _sc * 0.5;
     var _cx1 = _ccx - _hw;
     var _cy1 = _ccy - _hh;
     var _cx2 = _ccx + _hw;
@@ -75,7 +72,7 @@ for (var i = 0; i < LEVEL.COUNT; i++) {
     var _stars    = scr_get_stars(i, global.best_scores[i]);
     var _hover    = card_hover[i];
 
-    // Card shadow
+    // Shadow
     draw_set_color(c_black);
     draw_set_alpha(0.2);
     draw_roundrect_ext(_cx1 + 4, _cy1 + 6, _cx2 + 4, _cy2 + 6, 16, 16, false);
@@ -88,82 +85,90 @@ for (var i = 0; i < LEVEL.COUNT; i++) {
     var _bord = _hover ? COL_ORANGE : (_unlocked ? COL_BORDER : make_color_rgb(40,20,0));
     draw_panel(_cx1, _cy1, _cx2, _cy2, 16, _fill, _bord, 1);
 
+    // ── Number badge (มุมซ้ายบน) ──────────────────────
+    draw_panel(_cx1 + 8, _cy1 + 8, _cx1 + 32, _cy1 + 30,
+               8, COL_ORANGE, COL_ORANGE, 1);
+    draw_set_font(fnt_bold);
+    draw_set_color(c_white);
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_middle);
+    draw_text(_cx1 + 20, _cy1 + 19, string(i + 1));
+
     if (!_unlocked) {
-        // Lock overlay
+        // Locked overlay
         draw_set_color(c_black);
-        draw_set_alpha(0.45);
+        draw_set_alpha(0.5);
         draw_roundrect_ext(_cx1, _cy1, _cx2, _cy2, 16, 16, false);
         draw_set_alpha(1);
 
-        if (sprite_exists(spr_lock)) {
-            draw_sprite_ext(spr_lock, 0, _ccx, _ccy - 10,
-                            _sc, _sc, 0, c_white, 0.6);
-        } else {
-            draw_set_font(fnt_bold_big);
-            draw_set_color(COL_TEXT2);
-            draw_set_halign(fa_center);
-            draw_set_valign(fa_middle);
-            draw_text(_ccx, _ccy - 10, "LOCKED");
-        }
-
-        draw_set_font(fnt_small);
+        draw_set_font(fnt_bold_big);
         draw_set_color(COL_TEXT2);
         draw_set_halign(fa_center);
-        draw_set_valign(fa_top);
-        draw_text(_ccx, _cy2 - 28, "Complete previous level");
+        draw_set_valign(fa_middle);
+        draw_text(_ccx, _ccy, "LOCKED");
 
     } else {
-        // Level number badge
-        draw_panel(_cx1 + 10, _cy1 + 10, _cx1 + 36, _cy1 + 32,
-                   8, COL_ORANGE, COL_ORANGE, 1);
-        draw_set_font(fnt_bold);
-        draw_set_color(c_white);
-        draw_set_halign(fa_center);
-        draw_set_valign(fa_middle);
-        draw_text(_cx1 + 23, _cy1 + 21, string(i + 1));
+        // ── Layout แนวตั้ง 3 ส่วน ─────────────────────
+        // ส่วน 1: รูป (บน)       _cy1+8  ถึง _cy1+110
+        // ส่วน 2: ชื่อ (กลาง)    _cy1+112 ถึง _cy1+148
+        // ส่วน 3: คะแนน+ดาว (ล่าง) _cy1+150 ถึง _cy2-8
 
-        // Level icon
-        if (sprite_exists(_lv.icon_spr)) {
-            draw_sprite_ext(_lv.icon_spr, 0,
-                _ccx, _ccy - 22,
-                _sc * 0.9, _sc * 0.9,
-                0, c_white, 1);
+        // ── รูปอาหาร (ครึ่งบน) ────────────────────────
+        var _img_cx = _ccx;
+        var _img_cy = _cy1 + 68;   // กึ่งกลางรูป
+
+        var _show_spr = -1;
+        if (variable_struct_exists(_lv, "icon_spr") && sprite_exists(_lv.icon_spr)) {
+            _show_spr = _lv.icon_spr;
         } else {
-            draw_set_font(fnt_bold_big);
-            draw_set_color(COL_ORANGE);
-            draw_set_halign(fa_center);
-            draw_set_valign(fa_middle);
-            draw_text(_ccx, _ccy - 22, string(i + 1));
+            var _fb = fallback_sprs[min(i, array_length(fallback_sprs) - 1)];
+            if (_fb >= 0 && sprite_exists(_fb)) _show_spr = _fb;
         }
 
-        // Level name
+        if (_show_spr >= 0) {
+            var _sw = sprite_get_width(_show_spr);
+            var _sh = sprite_get_height(_show_spr);
+            var _max_size = 80.0;
+            var _ssc = min(_max_size / _sw, _max_size / _sh) * _sc;
+            draw_sprite_ext(_show_spr, 0,
+                _img_cx - _sw * 0.5 * _ssc,
+                _img_cy - _sh * 0.5 * _ssc,
+                _ssc, _ssc, 0, c_white, 1);
+        }
+
+        // ── ชื่อ level (กลาง) ─────────────────────────
         draw_set_font(fnt_bold);
         draw_set_color(COL_TEXT);
         draw_set_halign(fa_center);
         draw_set_valign(fa_top);
-        draw_text(_ccx, _cy2 - 64, _lv.name);
+        draw_text(_ccx, _cy1 + 118, _lv.name);
 
-        // Best score
+        // ── Best score ────────────────────────────────
         if (global.best_scores[i] > 0) {
             draw_set_font(fnt_tiny);
             draw_set_color(COL_TEXT2);
-            draw_text(_ccx, _cy2 - 48, "Best: " + string(global.best_scores[i]));
+            draw_text(_ccx, _cy1 + 150, "Best: " + string(global.best_scores[i]));
         }
 
-        // Stars
-        var _star_gap = 26;
-        var _star_sx  = _ccx - _star_gap;
+        // ── Stars (ล่างสุด) ───────────────────────────
+        var _star_gap = 28;
+        var _star_sx  = _ccx - _star_gap - 15;
+        var _star_y   = _cy2 - 28;
+
         for (var s = 0; s < 3; s++) {
             var _lit = (s < _stars);
             draw_set_alpha(_lit ? 1.0 : 0.2);
-            if (sprite_exists(spr_star_on)) {
-                var _ss = _lit ? spr_star_on : spr_star_off;
-                draw_sprite_ext(_ss, 0,
-                    _star_sx + s * _star_gap, _cy2 - 22,
-                    _sc * 0.75, _sc * 0.75, 0, c_white, 1);
+            if (_lit && sprite_exists(spr_star_on)) {
+                draw_sprite_ext(spr_star_on, 0,
+                    _star_sx + s * _star_gap, _star_y,
+                    0.65, 0.65, 0, c_white, 1);
+            } else if (!_lit && sprite_exists(spr_star_off)) {
+                draw_sprite_ext(spr_star_off, 0,
+                    _star_sx + s * _star_gap, _star_y,
+                    0.65, 0.65, 0, c_white, 1);
             } else {
                 draw_set_color(_lit ? COL_YELLOW : COL_SURFACE2);
-                draw_circle(_star_sx + s * _star_gap, _cy2 - 22, 9 * _sc, false);
+                draw_circle(_star_sx + s * _star_gap, _star_y, 9, false);
             }
         }
         draw_set_alpha(1);
