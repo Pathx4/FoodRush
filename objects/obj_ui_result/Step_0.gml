@@ -19,22 +19,20 @@ var _cy = _H * 0.5;
 var _mx = device_mouse_x_to_gui(0);
 var _my = device_mouse_y_to_gui(0);
 
-// popup ขนาดจริง
-var _pw = 380;
-var _ph = 360;
+var _pw = 360;
+var _ph = 380;
 var _px = _cx - _pw * 0.5;
 var _py = _cy - _ph * 0.5;
 
-// Button bounds (ตาม popup จริง)
 retry_hover = point_in_rectangle(_mx, _my,
-    _px + 16,        _py + _ph - 130,
-    _px + _pw * 0.5 - 8, _py + _ph - 90);
+    _px + 16,            _py + _ph - 140,
+    _px + _pw * 0.5 - 8, _py + _ph - 96);
 next_hover  = can_next && point_in_rectangle(_mx, _my,
-    _px + _pw * 0.5 + 8, _py + _ph - 130,
-    _px + _pw - 16,      _py + _ph - 90);
+    _px + _pw * 0.5 + 8, _py + _ph - 140,
+    _px + _pw - 16,      _py + _ph - 96);
 menu_hover  = point_in_rectangle(_mx, _my,
-    _px + 16,        _py + _ph - 80,
-    _px + _pw - 16,  _py + _ph - 44);
+    _px + 16,        _py + _ph - 86,
+    _px + _pw - 16,  _py + _ph - 50);
 
 if (mouse_check_button_pressed(mb_left)) {
     if (retry_hover) {

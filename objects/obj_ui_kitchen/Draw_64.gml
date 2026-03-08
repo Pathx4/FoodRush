@@ -89,7 +89,7 @@ if (_focus_idx >= 0) {
     // Dish sprite (ถ้ามี)
     if (sprite_exists(_fo.recipe.spr)) {
         draw_sprite_ext(_fo.recipe.spr, 0,
-            _fcx - 50, _fc_y1 + 130,
+            _fcx - 71, _fc_y1 + 130,
             1.4, 1.4, 0, c_white, 1);
     }
 

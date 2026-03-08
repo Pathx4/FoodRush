@@ -15,10 +15,11 @@ draw_panel(190, 10, 320, hud_h - 10, 16, COL_SURFACE2, COL_BORDER, 1);
 draw_set_font(fnt_tiny);
 draw_set_color(COL_TEXT2);
 draw_set_halign(fa_left);
+draw_set_valign(fa_top);
 draw_text(202, 18, "SCORE");
 draw_set_font(fnt_bold_big);
 draw_set_color(COL_YELLOW);
-draw_text(202, 40, string(floor(score_display)));
+draw_text(202, 38, string(floor(score_display)));
 
 // Earned chip
 draw_panel(328, 10, 458, hud_h - 10, 16, COL_SURFACE2, COL_BORDER, 1);
@@ -27,20 +28,42 @@ draw_set_color(COL_TEXT2);
 draw_text(340, 18, "EARNED");
 draw_set_font(fnt_bold_big);
 draw_set_color(COL_GREEN);
-draw_text(340, 40, "$" + string(global.session_money));
+draw_text(340, 38, "$" + string(global.session_money));
 
 // Lives chip
 draw_panel(466, 10, 566, hud_h - 10, 16, COL_SURFACE2, COL_BORDER, 1);
 draw_set_font(fnt_tiny);
 draw_set_color(COL_TEXT2);
 draw_text(478, 18, "LIVES");
+
 var _heart_col = (hearts_flash > 0) ? merge_color(COL_RED, c_white, hearts_flash) : COL_RED;
-draw_set_font(fnt_bold_big);
-draw_set_color(_heart_col);
-var _hearts_str = "";
-repeat (max(0, global.session_lives)) { _hearts_str += "♥ "; }
-if (global.session_lives <= 0) _hearts_str = "---";
-draw_text(478, 40, _hearts_str);
+var _heart_size = 18;
+var _heart_gap  = 4;
+var _heart_sx   = 478;
+var _heart_y    = 40;
+
+if (global.session_lives <= 0) {
+    draw_set_font(fnt_bold_big);
+    draw_set_color(COL_TEXT2);
+    draw_text(_heart_sx, _heart_y, "---");
+} else {
+    for (var h = 0; h < max(0, global.session_lives); h++) {
+        if (sprite_exists(spr_heart)) {
+            draw_sprite_ext(spr_heart, 0,
+                _heart_sx + h * (_heart_size + _heart_gap),
+                _heart_y,
+                0.5, 0.5, 0, _heart_col, 1);
+        } else {
+            draw_set_color(_heart_col);
+            draw_roundrect_ext(
+                _heart_sx + h * (_heart_size + _heart_gap),
+                _heart_y,
+                _heart_sx + h * (_heart_size + _heart_gap) + _heart_size,
+                _heart_y + _heart_size,
+                4, 4, false);
+        }
+    }
+}
 
 // Combo chip
 draw_panel(574, 10, 664, hud_h - 10, 16, COL_SURFACE2, COL_BORDER, 1);
@@ -50,7 +73,7 @@ draw_text(586, 18, "COMBO");
 var _combo_col = (global.session_combo >= 3) ? COL_ORANGE : COL_TEXT;
 draw_set_font(fnt_bold_big);
 draw_set_color(_combo_col);
-draw_text(586, 40, "x" + string(max(1, global.session_combo)));
+draw_text(586, 38, "x" + string(max(1, global.session_combo)));
 
 // Timer bar
 var _bar_x = 672 + timer_shake;
@@ -64,14 +87,14 @@ if (_pct > 0.5) {
 } else {
     _t_col = COL_RED;
 }
-draw_progress_bar(_bar_x, 26, _bar_w, 14, _pct, COL_SURFACE2, _t_col, 7);
+draw_progress_bar(_bar_x, 28, _bar_w, 14, _pct, COL_SURFACE2, _t_col, 7);
 draw_set_font(fnt_small);
 draw_set_color(COL_TEXT2);
 draw_set_halign(fa_center);
-draw_text(_bar_x + _bar_w * 0.5, 48, scr_format_time(ceil(global.time_left)));
+draw_text(_bar_x + _bar_w * 0.5, 50, scr_format_time(ceil(global.time_left)));
 
 // Pause button
-var _pb_fill = pause_hover ? COL_SURFACE2 : make_color_rgb(35,18,0);
+var _pb_fill = pause_hover ? COL_SURFACE2 : make_color_rgb(35, 18, 0);
 var _pb_bord = pause_hover ? COL_ORANGE : COL_BORDER;
 draw_panel(_W - 110, 14, _W - 10, hud_h - 14, 12, _pb_fill, _pb_bord, 1);
 draw_set_font(fnt_bold);

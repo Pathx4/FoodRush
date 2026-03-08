@@ -60,7 +60,7 @@ for (var i = 0; i < LEVEL.COUNT; i++) {
         var _star_spr = (s < _stars) ? spr_star_on : spr_star_off;
         draw_sprite_ext(_star_spr, 0,
             _star_start_x + s * 34,
-            _by + card_h - 42,
+            _by + card_h - 47,
             0.7, 0.7, 0, c_white, _lock ? 0.25 : 1.0);
     }
 
