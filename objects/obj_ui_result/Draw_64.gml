@@ -25,7 +25,7 @@ draw_panel(_px, _py, _px + _pw, _py + _ph, 24, COL_SURFACE, COL_BORDER, 1);
 var _icon_y = _py + 20;
 if (sprite_exists(result_spr)) {
     draw_sprite_ext(result_spr, 0,
-        _cx, _icon_y + 28,
+        _cx - 32 , _icon_y - 5,
         popup_scale, popup_scale,
         0, c_white, 1);
 }
@@ -44,12 +44,12 @@ var _star_gap = 58;
 
 for (var i = 0; i < 3; i++) {
     var _ss = star_scales[i];
-    var _sx = _cx - _star_gap + i * _star_gap;
+    var _sx = _cx - _star_gap + (i-0.5) * _star_gap;
     draw_set_alpha((i < stars) ? 1.0 : 0.25);
     if (sprite_exists(spr_star_on)) {
         var _spr = (i < stars_shown) ? spr_star_on : spr_star_off;
         draw_sprite_ext(_spr, 0, _sx, _star_y,
-                        _ss * 1.4, _ss * 1.4, 0, c_white, 1);
+                        _ss * 1.2, _ss * 1.2, 0, c_white, 1);
     } else {
         // fallback สี่เหลี่ยมแทน star
         draw_set_color((i < stars) ? COL_YELLOW : COL_SURFACE2);
@@ -98,7 +98,7 @@ draw_set_color(COL_RED);
 draw_text(_px + 32 + _sw3 * 2.5, _stat_y + 32, string(max(0, global.session_lives)));
 
 // ── Row 5: Retry + Next Level ────────────────────────
-var _btn_y  = _py + _ph - 140;
+var _btn_y  = _py + _ph - 120;
 var _btn_h  = 44;
 var _half_w = (_pw - 48) * 0.5;
 
@@ -127,7 +127,7 @@ if (can_next) {
 }
 
 // ── Row 6: Level Select ───────────────────────────────
-var _menu_y  = _py + _ph -6;
+var _menu_y  = _py + _ph - 56;
 var _m_fill  = menu_hover ? COL_SURFACE2 : make_color_rgb(35,18,0);
 var _m_bord  = menu_hover ? COL_ORANGE : COL_BORDER;
 draw_panel(_px + 16,      _menu_y,

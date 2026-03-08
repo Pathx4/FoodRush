@@ -61,7 +61,7 @@ function scr_data_init() {
     global.level_data[LEVEL.STREET_STALL] = {
         name           : "Street Stall",
         icon           : spr_level_stall,
-        duration       : 90,
+        duration       : 120,
         max_orders     : 4,
         order_interval : 12,
         recipes        : [RECIPE.BURGER, RECIPE.RICE_EGG,

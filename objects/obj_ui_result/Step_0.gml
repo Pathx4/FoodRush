@@ -25,14 +25,14 @@ var _px = _cx - _pw * 0.5;
 var _py = _cy - _ph * 0.5;
 
 retry_hover = point_in_rectangle(_mx, _my,
-    _px + 16,            _py + _ph - 140,
-    _px + _pw * 0.5 - 8, _py + _ph - 96);
+    _px + 16,            _py + _ph - 120,
+    _px + _pw * 0.5 - 8, _py + _ph - 74);
 next_hover  = can_next && point_in_rectangle(_mx, _my,
-    _px + _pw * 0.5 + 8, _py + _ph - 140,
-    _px + _pw - 16,      _py + _ph - 96);
+    _px + _pw * 0.5 + 8, _py + _ph - 120,
+    _px + _pw - 16,      _py + _ph - 74);
 menu_hover  = point_in_rectangle(_mx, _my,
-    _px + 16,        _py + _ph - 86,
-    _px + _pw - 16,  _py + _ph - 50);
+    _px + 16,        _py + _ph - 56,
+    _px + _pw - 16,  _py + _ph - 15);
 
 if (mouse_check_button_pressed(mb_left)) {
     if (retry_hover) {
