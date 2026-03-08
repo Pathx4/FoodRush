@@ -127,7 +127,7 @@ if (can_next) {
 }
 
 // ── Row 6: Level Select ───────────────────────────────
-var _menu_y  = _py + _ph - 86;
+var _menu_y  = _py + _ph -6;
 var _m_fill  = menu_hover ? COL_SURFACE2 : make_color_rgb(35,18,0);
 var _m_bord  = menu_hover ? COL_ORANGE : COL_BORDER;
 draw_panel(_px + 16,      _menu_y,

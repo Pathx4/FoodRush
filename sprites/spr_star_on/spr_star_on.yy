@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"FoodRush",
-    "path":"FoodRush.yyp",
+    "name":"Ingredient sprites",
+    "path":"folders/Ingredient sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

@@ -95,6 +95,7 @@
     {"id":{"name":"spr_dish_sandwich","path":"sprites/spr_dish_sandwich/spr_dish_sandwich.yy",},},
     {"id":{"name":"spr_dish_shrimp_rice","path":"sprites/spr_dish_shrimp_rice/spr_dish_shrimp_rice.yy",},},
     {"id":{"name":"spr_dish_sushi","path":"sprites/spr_dish_sushi/spr_dish_sushi.yy",},},
+    {"id":{"name":"spr_heart","path":"sprites/spr_heart/spr_heart.yy",},},
     {"id":{"name":"spr_ing_beef","path":"sprites/spr_ing_beef/spr_ing_beef.yy",},},
     {"id":{"name":"spr_ing_bread","path":"sprites/spr_ing_bread/spr_ing_bread.yy",},},
     {"id":{"name":"spr_ing_bun","path":"sprites/spr_ing_bun/spr_ing_bun.yy",},},
