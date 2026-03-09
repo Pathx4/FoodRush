@@ -8,11 +8,11 @@ btn_y_off = lerp(btn_y_off, 0,   0.07);
 var _W = display_get_gui_width();
 var _H = display_get_gui_height();
 for (var i = 0; i < array_length(floaties); i++) {
-    var _f       = floaties[i];
-    _f.y        += _f.vy;
-    _f.rot      += _f.rot_s;
-    _f.wobble   += _f.wobble_s;
-    _f.x        += sin(_f.wobble) * 0.5;
+    var _f    = floaties[i];
+    _f.y     += _f.vy;
+    _f.rot   += _f.rot_s;
+    _f.wobble += _f.wobble_s;
+    _f.x     += sin(_f.wobble) * 0.5;
     if (_f.y > _H + 40) {
         _f.y   = -40;
         _f.x   = random(_W);
@@ -21,16 +21,19 @@ for (var i = 0; i < array_length(floaties); i++) {
 }
 
 // Mouse
-var _mx  = device_mouse_x_to_gui(0);
-var _my  = device_mouse_y_to_gui(0);
-var _cx  = _W * 0.5;
-var _by1 = _H * 0.55 + btn_y_off;
-var _hy1 = _by1 + 62;
+var _mx   = device_mouse_x_to_gui(0);
+var _my   = device_mouse_y_to_gui(0);
+var _cx   = _W * 0.5;
+var _by1  = _H * 0.55 + btn_y_off;
+var _hy1  = _by1 + 62;
+var _cry1 = _hy1 + 62;
 
-play_hover  = point_in_rectangle(_mx, _my, _cx - 130, _by1, _cx + 130, _by1 + 52);
-howto_hover = point_in_rectangle(_mx, _my, _cx - 130, _hy1, _cx + 130, _hy1 + 52);
+play_hover    = point_in_rectangle(_mx, _my, _cx - 130, _by1,  _cx + 130, _by1  + 52);
+howto_hover   = point_in_rectangle(_mx, _my, _cx - 130, _hy1,  _cx + 130, _hy1  + 52);
+credits_hover = point_in_rectangle(_mx, _my, _cx - 130, _cry1, _cx + 130, _cry1 + 52);
 
 if (mouse_check_button_pressed(mb_left)) {
-    if (play_hover)  room_goto(rm_level_select);
-    if (howto_hover) instance_create_layer(0, 0, "Instances", obj_ui_howtoplay);
+    if (play_hover)    room_goto(rm_level_select);
+    if (howto_hover)   instance_create_layer(0, 0, "Instances", obj_ui_howtoplay);
+    if (credits_hover) instance_create_layer(0, 0, "Instances", obj_ui_credits);
 }

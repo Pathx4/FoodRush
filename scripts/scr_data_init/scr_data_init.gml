@@ -85,7 +85,7 @@ function scr_data_init() {
                           RECIPE.RICE_EGG, RECIPE.SANDWICH],
         // วัตถุดิบ: ขนมปัง เนื้อ ชีส ผัก ปลา ไก่ ไข่ ซอส
         ingredients    : [ING.BUN, ING.PATTY, ING.CHEESE, ING.LETTUCE,
-                          ING.TOMATO, ING.FISH, ING.CHICKEN, ING.BREAD,
+                          ING.TOMATO, ING.RICE, ING.FISH, ING.CHICKEN, ING.BREAD,
                           ING.EGG, ING.SAUCE, ING.VEGGIE],
         star_thresholds: [500, 800, 1200],
         goal_score     : 800
