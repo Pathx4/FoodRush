@@ -25,6 +25,14 @@ if (_active_c > 0) {
     draw_text(panel_x + panel_w - 20, panel_y + 20, string(_active_c));
 }
 
+// ── Admin autofill indicator ──────────────────────────
+if (variable_global_exists("admin_autofill") && global.admin_autofill) {
+    draw_set_font(fnt_tiny);
+    draw_set_color(make_color_rgb(100, 255, 120));
+    draw_set_halign(fa_right);
+    draw_text(panel_x + panel_w - 42, panel_y + 14, "AUTO");
+}
+
 if (_active_c == 0) {
     draw_set_font(fnt_italic);
     draw_set_color(COL_TEXT2);
@@ -82,37 +90,42 @@ for (var i = 0; i < array_length(global.orders); i++) {
         draw_set_alpha(1);
     }
 
-// ── Row 1: Avatar + ชื่อ + Tip ────────────────────
-var _row1_y = _cy1 + 10;
+    // ── Row 1: Avatar + ชื่อ + เมนู ──────────────────
+    var _row1_y = _cy1 + 10;
 
-// แก้ตรงนี้ — offset ด้วย sprite size
-if (sprite_exists(_o.avatar_spr)) {
-    var _aw = sprite_get_width(_o.avatar_spr);
-    var _ah = sprite_get_height(_o.avatar_spr);
-    draw_sprite_ext(_o.avatar_spr, 0,
-        _cx1 + 16 - _aw * 0.5 * 0.55,   // ชดเชย origin ซ้าย
-        _row1_y + 12 - _ah * 0.5 * 0.55, // ชดเชย origin บน
-        0.55, 0.55, 0, c_white, 1);
-}
+    if (sprite_exists(_o.avatar_spr)) {
+        var _aw = sprite_get_width(_o.avatar_spr);
+        var _ah = sprite_get_height(_o.avatar_spr);
+        draw_sprite_ext(_o.avatar_spr, 0,
+            _cx1 + 16 - _aw * 0.5 * 0.55,
+            _row1_y + 12 - _ah * 0.5 * 0.55,
+            0.55, 0.55, 0, c_white, 1);
+    }
 
-// ชื่อลูกค้า — เริ่มหลัง avatar
-draw_set_font(fnt_bold);
-draw_set_color(COL_TEXT);
-draw_set_halign(fa_left);
-draw_set_valign(fa_top);
-draw_text(_cx1 + 38, _row1_y - 5, _o.customer);  // ← เพิ่มจาก 34 เป็น 38
+    draw_set_font(fnt_bold);
+    draw_set_color(COL_TEXT);
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_top);
+    draw_text(_cx1 + 38, _row1_y - 5, _o.customer);
 
-// ชื่อเมนู
-draw_set_font(fnt_small);
-draw_set_color(COL_TEXT2);
-draw_text(_cx1 + 38, _row1_y + 20, _o.recipe.name);
+    draw_set_font(fnt_small);
+    draw_set_color(COL_TEXT2);
+    draw_text(_cx1 + 38, _row1_y + 20, _o.recipe.name);
+
+    // ── Admin autofill hint บนการ์ด ──────────────────
+    if (variable_global_exists("admin_autofill") && global.admin_autofill) {
+        draw_set_font(fnt_tiny);
+        draw_set_color(make_color_rgb(80, 200, 100));
+        draw_set_halign(fa_right);
+        draw_text(_cx2 - 6, _row1_y, "click to fill");
+    }
 
     // ── Row 2: Ingredient icons ────────────────────────
     var _ings     = _o.recipe.ingredients;
     var _ing_size = 30;
     var _ing_gap  = 4;
-	var _ing_y = _cy1 + 60;
-	var _ing_x = _cx1 + 4;
+    var _ing_y    = _cy1 + 60;
+    var _ing_x    = _cx1 + 4;
 
     for (var j = 0; j < array_length(_ings); j++) {
         var _id  = _ings[j];

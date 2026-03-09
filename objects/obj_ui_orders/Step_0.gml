@@ -19,7 +19,10 @@ if (mouse_check_button_pressed(mb_left)) {
         _drawn++;
 
         if (point_in_rectangle(_mx, _my, _cx1, _cy1, _cx2, _cy2)) {
-            scr_autofill_tray(i);
+            // auto-fill เฉพาะตอน admin_autofill เปิดอยู่
+            if (variable_global_exists("admin_autofill") && global.admin_autofill) {
+                scr_autofill_tray(i);
+            }
             break;
         }
     }
