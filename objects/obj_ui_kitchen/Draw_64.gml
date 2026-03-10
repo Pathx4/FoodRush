@@ -182,7 +182,7 @@ draw_set_valign(fa_top);
 draw_text(kitchen_x + _stat_gap * 0.5, _stats_y + 10, "SERVED");
 draw_set_font(fnt_bold_big);
 draw_set_color(COL_GREEN);
-draw_text(kitchen_x + _stat_gap * 0.5, _stats_y + 30, string(global.session_score div 100));
+draw_text(kitchen_x + _stat_gap * 0.5, _stats_y + 30, string(global.session_served));
 
 // COMBO
 draw_panel(kitchen_x + _stat_gap + 10,      _stats_y,

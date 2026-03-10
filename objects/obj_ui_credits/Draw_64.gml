@@ -97,7 +97,7 @@ draw_set_font(fnt_small);
 draw_set_color(COL_TEXT2);
 draw_set_halign(fa_center);
 draw_set_valign(fa_top);
-draw_text(_cx, _y, "Made with  GameMaker Studio 2");
+draw_text(_cx, _y, "Made with  GameMaker");
 
 // ── Header วาดทับสุดท้าย ─────────────────────────────
 draw_set_color(COL_SURFACE2);

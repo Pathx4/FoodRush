@@ -155,11 +155,11 @@ draw_line(_px, _py + panel_h - 40, _px + panel_w, _py + panel_h - 40);
 
 var _status = "";
 if (global.admin_freeze) {
-    _status = "⏸ FROZEN";
+    _status = "FROZEN TIME";
 } else {
-    _status = "▶ " + string(global.admin_speed) + "x speed";
+    _status = string(global.admin_speed) + "x speed";
 }
-if (global.admin_autofill) _status += "  |  ✓ Auto-fill";
+if (global.admin_autofill) _status += "  |  Auto-fill";
 
 draw_set_font(fnt_small);
 draw_set_color(make_color_rgb(180, 140, 255));

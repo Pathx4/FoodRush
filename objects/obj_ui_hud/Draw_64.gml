@@ -38,7 +38,7 @@ draw_set_color(COL_TEXT2);
 draw_text(478, 18, "LIVES");
 var _heart_col  = (hearts_flash > 0) ? merge_color(COL_RED, c_white, hearts_flash) : COL_RED;
 var _heart_size = 18;
-var _heart_gap  = 4;
+var _heart_gap  = 10;
 var _heart_sx   = 478;
 var _heart_y    = 40;
 if (global.session_lives <= 0) {

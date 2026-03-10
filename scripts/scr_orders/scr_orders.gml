@@ -1,22 +1,13 @@
-/// @file scr_orders.gml
-/// @desc All order management functions.
-
-// ─────────────────────────────────────────────────────────────
-// SPAWN ORDER
-// ─────────────────────────────────────────────────────────────
 function scr_spawn_order() {
     var _lv      = global.level_data[global.session_level_id];
     var _rec_id  = array_random(_lv.recipes);
     var _recipe  = global.recipe[_rec_id];
 
-    // Pick random customer name + avatar index
     var _customer_names   = ["Alice","Bob","Chen","Diana","Eddie","Fiona","George","Hana","Ivan","Julia","Ken","Lily"];
     var _customer_avatars = [spr_avatar_0,spr_avatar_1,spr_avatar_2,spr_avatar_3,
                              spr_avatar_4,spr_avatar_5,spr_avatar_6,spr_avatar_7,
                              spr_avatar_8,spr_avatar_9,spr_avatar_10,spr_avatar_11];
-    var _ci = irandom(array_length(_customer_names) - 1);
-
-    // Tip amount based on recipe value
+    var _ci  = irandom(array_length(_customer_names) - 1);
     var _tip = irandom_range(5, 30);
 
     var _order = {
@@ -29,19 +20,17 @@ function scr_spawn_order() {
         time_left   : _recipe.time_limit,
         state       : ORDER_STATE.WAITING,
         tip         : _tip,
-        created_at  : current_time,  // ms
-        // UI slot position (set by obj_ui_orders)
+        created_at  : current_time,
         slot_y      : 0,
-        slide_offset: 300,           // starts off-screen right
+        slide_offset: 300,
     };
 
     array_push(global.orders, _order);
-
     play_sound(SND_TICK);
 }
 
 // ─────────────────────────────────────────────────────────────
-// TICK ORDERS  (call every step from obj_game_manager)
+// TICK ORDERS
 // ─────────────────────────────────────────────────────────────
 function scr_tick_orders(_dt) {
     var _i = 0;
@@ -57,7 +46,6 @@ function scr_tick_orders(_dt) {
             }
         }
 
-        // Animate slide-in
         if (_o.slide_offset > 0) {
             _o.slide_offset = lerp(_o.slide_offset, 0, 0.18);
             if (_o.slide_offset < 1) _o.slide_offset = 0;
@@ -65,9 +53,6 @@ function scr_tick_orders(_dt) {
 
         _i++;
     }
-
-    // Remove fully expired/served orders after a short delay
-    // (handled by obj_ui_orders via removal flag)
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -80,16 +65,11 @@ function scr_order_expired(_index) {
 
     play_sound(SND_FAIL);
 
-    // Flash the HUD hearts
     with (obj_ui_hud) { hearts_flash = 1.0; }
-
-    // Spawn negative text
     scr_spawn_fx_text(WINDOW_W * 0.5, 120, "Order Expired! -1 Life", COL_RED);
 
-    // Remove from array after brief delay — mark for removal
     global.orders[_index].state = ORDER_STATE.EXPIRED;
 
-    // Check lives
     if (global.session_lives <= 0) {
         global.session_lives = 0;
         scr_end_level();
@@ -97,10 +77,10 @@ function scr_order_expired(_index) {
 }
 
 // ─────────────────────────────────────────────────────────────
-// SERVE DISH  (called when player hits Serve button)
+// SERVE DISH
 // ─────────────────────────────────────────────────────────────
 function scr_serve_dish() {
-    // Find first WAITING order that matches the tray
+    // หา order ที่ตรงกับ tray
     var _matched_index = -1;
     for (var i = 0; i < array_length(global.orders); i++) {
         var _o = global.orders[i];
@@ -112,7 +92,7 @@ function scr_serve_dish() {
         }
     }
 
-    if (_matched_index == -1) exit;  // no match
+    if (_matched_index == -1) exit;
 
     var _o = global.orders[_matched_index];
 
@@ -128,9 +108,12 @@ function scr_serve_dish() {
     global.session_score  += _earned;
     global.session_money  += _base + _tip_earned;
 
+    // ── นับจำนวนจานที่ serve ได้ ─────────────────────────
+    global.session_served++;
+
     // ── Combo ────────────────────────────────────────────
     global.session_combo++;
-    global.combo_timer = 8.0;  // seconds to keep combo alive
+    global.combo_timer = 8.0;
 
     // ── FX ───────────────────────────────────────────────
     play_sound(SND_SERVE);
@@ -146,15 +129,13 @@ function scr_serve_dish() {
     }
 
     // ── Mark order served ────────────────────────────────
-    _o.state = ORDER_STATE.SERVED;
-
-    // ── Clear tray ───────────────────────────────────────
+    _o.state    = ORDER_STATE.SERVED;
     global.tray = [];
 
     // ── Notify UI ────────────────────────────────────────
-    with (obj_ui_hud)     { event_user(0); }   // refresh HUD
-    with (obj_ui_tray)    { event_user(0); }   // refresh tray
-    with (obj_ui_orders)  { event_user(0); }   // refresh orders list
+    with (obj_ui_hud)    { event_user(0); }
+    with (obj_ui_tray)   { event_user(0); }
+    with (obj_ui_orders) { event_user(0); }
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -169,7 +150,6 @@ function scr_orders_active_count() {
 }
 
 function scr_orders_cleanup() {
-    // Remove served/expired orders that have finished their exit animation
     var _new = [];
     for (var i = 0; i < array_length(global.orders); i++) {
         if (global.orders[i].state == ORDER_STATE.WAITING) {
@@ -180,7 +160,7 @@ function scr_orders_cleanup() {
 }
 
 // ─────────────────────────────────────────────────────────────
-// AUTO-FILL TRAY FROM ORDER  (called when player clicks order)
+// AUTO-FILL TRAY FROM ORDER
 // ─────────────────────────────────────────────────────────────
 function scr_autofill_tray(_order_index) {
     var _o = global.orders[_order_index];
